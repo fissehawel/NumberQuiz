@@ -24,17 +24,24 @@ public class NumberQuiz extends HttpServlet {
             String page = "<html lang = \"en\">\n" +  "    <head>\n" +
                     "      <title>Number Quiz</title>\n" +
                     "      <style>\n" +
-                    "        body{\n" +
-                    "          \n" +
-                    "        }\n" +
-                    "      </style>\n" +
-                    "    </head>";
-            page += " <body>\n" +
-                    "      <h2> The Number Quiz</h2>\n" +
+                            "        body{margin: 20px;\n" +
+                            "          \n" +
+                            "        }\n" +
+                            "   .content {" +
+                            "       width: 350px;    " +
+                            "       padding: 10px;" +
+                            "       border: 1px solid black" +
+                            "}" +
+                            "      </style>\n" +
+                            "    </head>";
+                    page += " <body>\n" +
+                            "   <div class = 'content'>" +
+                            "      <h2> The Number Quiz</h2>\n" +
                     "      <form action = \"NumberQuiz\" method = \"post\">\n" +
                     "       <p> Your current score is " + quiz.score + " </p>" +
                     "       <p> You have completed the Number Quiz, with a score of " + quiz.score + " out of 5 </p>" +
                     "      </form>\n" +
+                    "     </div>" +
                     "  </body>\n" +
                     "</html>";
 

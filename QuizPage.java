@@ -20,12 +20,18 @@ public class QuizPage extends HttpServlet {
                 "    <head>\n" +
                 "      <title>Number Quiz</title>\n" +
                 "      <style>\n" +
-                "        body{\n" +
+                "        body{margin: 20px;\n" +
                 "          \n" +
                 "        }\n" +
+                "   .content {" +
+                "       width: 350px;    " +
+                "       padding: 10px;" +
+                "       border: 1px solid black" +
+                "}" +
                 "      </style>\n" +
                 "    </head>";
         page += " <body>\n" +
+                "   <div class = 'content'>" +
                 "      <h2> The Number Quiz</h2>\n" +
                 "      <form action = \"NumberQuiz\" method = \"post\">\n" +
                 "       <p> Your current score is " + quiz.score + " </p>" +
@@ -34,6 +40,7 @@ public class QuizPage extends HttpServlet {
                 "       <p><label>Your answer <input type=\"text\" name=\"answer\" size = \"5\" > </label></p>" +
                 "        <input type = \"submit\" value = \"Submit\">\n" +
                 "      </form>\n" +
+                "    </div>   " +
                 "  </body>\n" +
                 "</html>";
 
