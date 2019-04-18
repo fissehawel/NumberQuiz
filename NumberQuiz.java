@@ -3,37 +3,60 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet({"/NumberQuiz"})
+@WebServlet("/NumberQuiz")
+
 public class NumberQuiz extends HttpServlet {
 
-    private static int qsNum = 0;        // Question Number;
-    private static Quiz[] quizs = new Quiz[5];
-    private static int score = 0;
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Quiz quiz = (Quiz) request.getSession().getAttribute("quiz");
+        if(quiz.index == 4){
+            
+             int ans = Integer.valueOf(request.getParameter("answer"));
+             if(ans == quiz.getAnswer()[quiz.index]) {
+                 quiz.score++;
+             }
 
-      protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
+             response.setContentType("text/html");
+            String page = "<html lang = \"en\">\n" +  "    <head>\n" +
+                    "      <title>Number Quiz</title>\n" +
+                    "      <style>\n" +
+                    "        body{\n" +
+                    "          \n" +
+                    "        }\n" +
+                    "      </style>\n" +
+                    "    </head>";
+            page += " <body>\n" +
+                    "      <h2> The Number Quiz</h2>\n" +
+                    "      <form action = \"NumberQuiz\" method = \"post\">\n" +
+                    "       <p> Your current score is " + quiz.score + " </p>" +
+                    "       <p> You have completed the Number Quiz, with a score of " + quiz.score + " out of 5 </p>" +
+                    "      </form>\n" +
+                    "  </body>\n" +
+                    "</html>";
 
-            String num1 = "1.0";
-            String num2 = "1.0";
-            String num3 = "1.0";
-            String num4 = "1.0";
+            PrintWriter out = response.getWriter();
+            out.println(page);
 
-            out.println(" <h2> The Number Quiz</h2>");
-            out.println("<form action='NumberQuiz'>");
-            out.println(" <p> Your current score is" + score + " </p>");
-            out.println();
+        } else{
+            int ans = Integer.valueOf(request.getParameter("answer"));
+            if(ans == quiz.getAnswer()[quiz.index]) {
+                quiz.score++;
+            }
+            quiz.index++;
+            request.getRequestDispatcher("QuizPage").forward(request, response);
+        }
 
-            out.println(" <p> Guess the next number </p>");
-            out.println(" <p> " + quizs[0] + " </p>");
-            out.println();
-            out.print(" <p><label>Your answer <input type=\"text\" name=\"answer\" size = \"10\" > </label></p>");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request, response);
+
+        HttpSession session = request.getSession();
+        session.setAttribute("quiz", new Quiz());
+        request.getRequestDispatcher("QuizPage").forward(request, response);
+
     }
 }
